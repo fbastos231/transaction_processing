@@ -5,22 +5,32 @@ import fnmatch
 
 def move_files():
     # Step 1: Define the directory where the files are located
-    from_directory = '/Users/felipebastos/Downloads'  # Replace with your directory path
-    to_directory = '/Users/felipebastos/Desktop/Transactions'    
+    from_directory = '/Users/felipebastos/Downloads'  # Replace with desired 'from' path
+    to_directory = '/Users/felipebastos/Desktop/Transactions' # Replace with desired 'to' directory path
     
-    if fnmatch.fnmatch(os.path.basename(from_directory), 'SIMPLII.csv'):
-        os.rename(os.path.join(from_directory, "SIMPLII.csv"),os.path.join(to_directory, "SIMPLII.csv"))
+
+    # Step 2: Use glob to find all files starting with "trans", "cibc" and ending with ".csv". 
+    #         Also add "SIMPLII.csv" & "activity.csv" files to list
     
-    # Step 3: Use glob to find all files starting with "trans" and ending with ".csv"
     files = glob.glob(os.path.join(from_directory, "trans*.csv"))
     
     files.extend(glob.glob(os.path.join(from_directory, "cibc*.csv")))
 
-    # Step 4: Loop through each file
+    files.extend(glob.glob(os.path.join(from_directory, "SIMPLII.csv")))
+
+    files.extend(glob.glob(os.path.join(from_directory, "activity.csv")))
+
+    # Step 3: Loop through each file
     for file_path in files:
            
         # Read the CSV file
         df = pd.read_csv(file_path)
+
+        if fnmatch.fnmatch(os.path.basename(file_path), 'SIMPLII.csv'):
+            os.rename(os.path.join(from_directory, "SIMPLII.csv"),os.path.join(to_directory, "SIMPLII.csv"))
+    
+        if fnmatch.fnmatch(os.path.basename(file_path), 'activity.csv'):
+            os.rename(os.path.join(from_directory, "activity.csv"),os.path.join(to_directory, "AMEX.csv"))
 
         if fnmatch.fnmatch(os.path.basename(file_path), 'trans*.csv'):
             # Extract the desired value (assuming the value is in the first row and a specific column)
