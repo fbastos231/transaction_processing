@@ -1,15 +1,18 @@
 # Import packages needed
 import numpy as np
 import pandas as pd
+import os
 
 def transactions():
-    # Read the given CSV file
-    amex = pd.read_csv("AMEX.csv")
-    rbc = pd.read_csv("RBC.csv")
-    simplii = pd.read_csv("SIMPLII.csv")
-    rbcchecking = pd.read_csv("RBCChecking.csv")
-    cibcV = pd.read_csv("cibcV.csv")
-    cibcM = pd.read_csv("cibcM.csv")
+    directory = '/Users/felipebastos/Desktop/Transactions'
+    
+    # Read the given CSV files
+    amex = pd.read_csv(os.path.join(directory, "AMEX.csv"))
+    rbc = pd.read_csv(os.path.join(directory, "RBC.csv"))
+    simplii = pd.read_csv(os.path.join(directory, "SIMPLII.csv"))
+    rbcchecking = pd.read_csv(os.path.join(directory, "RBCChecking.csv"))
+    cibcV = pd.read_csv(os.path.join(directory, "cibcV.csv"))
+    cibcM = pd.read_csv(os.path.join(directory, "cibcM.csv"))
 
     # Dataframe for capturing all transactions
     results = pd.DataFrame()
@@ -101,5 +104,5 @@ def transactions():
     results['Amount'] = results['Amount'].astype(float)
 
     #Export for upload
-    results.to_csv(r'Export.csv', index=False, header=True)
+    results.to_csv(os.path.join(directory,"Export.csv"), index=False, header=True)
     return

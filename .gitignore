@@ -1,0 +1,5 @@
+#Ignore Enviroment Variables
+.env
+
+#Ignore Python Cache
+__pycache__
